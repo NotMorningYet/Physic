@@ -17,6 +17,11 @@ public class TimeCounter : MonoBehaviour
         _isWorking = true;
     }
 
+    public void CountStop()
+    {
+        _isWorking = false;
+    }
+
     private void Update()
     {
         if (_isWorking & IsOutOfTime == false)
@@ -28,8 +33,4 @@ public class TimeCounter : MonoBehaviour
         }
     }
 
-    public void StopCount()
-    {
-        _isWorking = false;
-    }
 }

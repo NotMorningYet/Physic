@@ -52,7 +52,7 @@ public class Manage : MonoBehaviour
     private void GameWin()
     {
         _ui.GameWinShow(_restartButton);
-        _timeCounter.StopCount();
+        _timeCounter.CountStop();
         _isPlaying = false;
         _player.Freeze();
     }
