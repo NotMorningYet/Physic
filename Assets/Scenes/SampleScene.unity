@@ -334,6 +334,7 @@ MonoBehaviour:
   _maxSpeed: 2
   _startPosition: {x: 0, y: 0.5, z: -12}
   _collectBurst: {fileID: 1155192511}
+  _trail: {fileID: 1810304257}
 --- !u!4 &259638601
 Transform:
   m_ObjectHideFlags: 0
@@ -2194,7 +2195,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
