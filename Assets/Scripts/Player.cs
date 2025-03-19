@@ -65,9 +65,6 @@ public class Player : MonoBehaviour
 
         _moveInputX = Input.GetAxisRaw(_horizontalName);
         _moveInputZ = Input.GetAxisRaw(_verticalName);
-
-        if (MathF.Abs(_moveInputX) > _deadZone || Mathf.Abs(_moveInputZ) > _deadZone)
-            _rigidBody.AddForce(new Vector3(_moveInputX * _moveForce * Time.deltaTime, 0, _moveInputZ * _moveForce * Time.deltaTime), ForceMode.Acceleration);
     }
 
     private void FixedUpdate()
@@ -78,6 +75,9 @@ public class Player : MonoBehaviour
             _isJumpPressed = false;
             _isOnGround = false;
         }
+
+        if (MathF.Abs(_moveInputX) > _deadZone || Mathf.Abs(_moveInputZ) > _deadZone)
+            _rigidBody.AddForce(new Vector3(_moveInputX * _moveForce * Time.deltaTime, 0, _moveInputZ * _moveForce * Time.deltaTime), ForceMode.Acceleration);
     }
 
     private void OnCollisionEnter(Collision collision)
