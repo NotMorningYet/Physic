@@ -4,10 +4,10 @@ public class TimeCounter : MonoBehaviour
 {
     private float _timeMax;
     private float _timeToLoose;
-
-    public float TimeToLoose { get => _timeToLoose; private set { } }
-    public bool IsOutOfTime { get; private set; }
     private bool _isWorking;
+
+    public float TimeToLoose { get => _timeToLoose; }
+    public bool IsOutOfTime { get; private set; }
 
     public void CountStart(int time)
     {

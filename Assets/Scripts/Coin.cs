@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    [SerializeField] Animator _animator;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private CoinManager _coinManager;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -10,7 +11,7 @@ public class Coin : MonoBehaviour
 
         if (player != null)
         {
-            gameObject.GetComponentInParent<Manage>().DecreaseCoinsToCollect();
+            _coinManager.CoinCollected();
             gameObject.SetActive(false);
         }
     }

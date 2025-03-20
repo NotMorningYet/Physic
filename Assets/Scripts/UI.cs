@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] TMP_Text _endGameText;
-    [SerializeField] TMP_Text _coinsText;
-    [SerializeField] TMP_Text _timeText;
+    [SerializeField] private TMP_Text _endGameText;
+    [SerializeField] private TMP_Text _coinsText;
+    [SerializeField] private TMP_Text _timeText;
     
     private string _winMessage = "Все монетки собраны!\nВы победили!\n";
     private string _looseMessage = "Время вышло!\nВы проиграли!\n";
@@ -13,6 +13,11 @@ public class UI : MonoBehaviour
     private string _timeTextCaption = "Времени осталось: ";
     private float _timeToLoose;
     private float _coinsRemain;  
+
+    public void ResetGame()
+    {
+        _endGameText.enabled = false;
+    }
 
     public void RefreshData(int coinsRemain, float timeToLoose)
     {
@@ -27,7 +32,7 @@ public class UI : MonoBehaviour
         _endGameText.enabled = true;
     }
 
-    internal void GameWinShow(string ButtoonToRestart)
+    public void GameWinShow(string ButtoonToRestart)
     {
         _endGameText.color = Color.green;
         _endGameText.text = _winMessage + $"Нажмите \n{ButtoonToRestart}\n для новой игры";
@@ -38,10 +43,5 @@ public class UI : MonoBehaviour
     {
         _timeText.text = _timeTextCaption + _timeToLoose.ToString("0.0");
         _coinsText.text = _coinsTextCaption + _coinsRemain.ToString();
-    }
-
-    public void ResetGame()
-    {
-        _endGameText.enabled = false;
     }
 }

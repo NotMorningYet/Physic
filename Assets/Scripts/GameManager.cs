@@ -1,22 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Manage : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    [SerializeField] TimeCounter _timeCounter;
-    [SerializeField] UI _ui;
-    [SerializeField] Player _player;
+    [SerializeField] private TimeCounter _timeCounter;
+    [SerializeField] private UI _ui;
+    [SerializeField] private Player _player;
     [SerializeField] private int _levelTime;
-    [SerializeField] List<Coin> _coins;
+    [SerializeField] private CoinManager _coinManager;
 
-    private int _coinsToCollect;
     private string _restartButton = "R";
     private bool _isPlaying;
-
-    public void DecreaseCoinsToCollect()
-    {
-        _coinsToCollect--;
-    }
 
     private void Awake()
     {
@@ -25,7 +19,8 @@ public class Manage : MonoBehaviour
 
     private void Update()
     {
-        _ui.RefreshData(_coinsToCollect, _timeCounter.TimeToLoose);
+        int coinsToCollect = _coinManager.CoinsToCollect;
+        _ui.RefreshData(coinsToCollect, _timeCounter.TimeToLoose);
 
         if (_isPlaying == false)
         {
@@ -42,7 +37,7 @@ public class Manage : MonoBehaviour
             return;
         }
 
-        if (_coinsToCollect == 0)
+        if (coinsToCollect == 0)
         {
             GameWin();
             return;
@@ -66,15 +61,10 @@ public class Manage : MonoBehaviour
 
     private void ResetGame()
     {
-        foreach (Coin coin in _coins)
-        {
-            coin.gameObject.SetActive(true);
-        }
-
-        _coinsToCollect = _coins.Count;
-        _timeCounter.CountStart(_levelTime);
+        _coinManager.Initialize();
         _player.Initialize();
-        _ui.RefreshData(_coinsToCollect, _timeCounter.TimeToLoose);
+        _timeCounter.CountStart(_levelTime);
+        _ui.RefreshData(_coinManager.CoinsToCollect, _timeCounter.TimeToLoose);
         _ui.ResetGame();
         _isPlaying = true;
     }

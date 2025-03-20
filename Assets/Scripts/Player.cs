@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float _moveForce;
-    [SerializeField] float _jumpForce;
-    [SerializeField] float _maxSpeed;
-    [SerializeField] Vector3 _startPosition;
-    [SerializeField] ParticleSystem _collectBurst;
-    [SerializeField] TrailRenderer _trail;
-
-    public int CoinsCollected { get; private set; }
+    [SerializeField] private float _moveForce;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _maxSpeed;
+    [SerializeField] private Vector3 _startPosition;
+    [SerializeField] private ParticleSystem _collectBurst;
+    [SerializeField] private TrailRenderer _trail;
 
     private bool _freezed;
     private bool _isJumpPressed;
@@ -22,6 +20,8 @@ public class Player : MonoBehaviour
     private float _moveInputX;
     private float _moveInputZ;
     private float _deadZone = 0.05f;
+
+    public int CoinsCollected { get; private set; }
 
     public void Initialize()
     {
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     public void AddCoin()
     {
         CoinsCollected += 1;
+        _collectBurst.Play();
     }
 
     public void Freeze()
@@ -83,20 +84,12 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Floor floor = collision.collider.GetComponentInParent<Floor>();
+
         if (floor != null)
         {
             ContactPoint contact = collision.contacts[0];
             if (contact.normal == Vector3.up)
                 _isOnGround = true;
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<Coin>())
-        {
-            AddCoin();
-            _collectBurst.Play();
         }
     }
 }
