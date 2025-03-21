@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     private string _restartButton = "R";
     private bool _isPlaying;
+    private int _numberOfCoinsToCollect;
 
     private void Awake()
     {
@@ -18,9 +19,8 @@ public class GameManager : MonoBehaviour
     }
 
     private void Update()
-    {
-        int coinsToCollect = _coinManager.CoinsToCollect;
-        _ui.RefreshData(coinsToCollect, _timeCounter.TimeToLoose);
+    {        
+        _ui.RefreshData(CoinsRemainToCOllect(), _timeCounter.TimeToLoose);
 
         if (_isPlaying == false)
         {
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (coinsToCollect == 0)
+        if (CoinsRemainToCOllect() == 0)
         {
             GameWin();
             return;
@@ -64,8 +64,15 @@ public class GameManager : MonoBehaviour
         _coinManager.Initialize();
         _player.Initialize();
         _timeCounter.CountStart(_levelTime);
-        _ui.RefreshData(_coinManager.CoinsToCollect, _timeCounter.TimeToLoose);
+        _numberOfCoinsToCollect = _coinManager.GetInitialNumberOfCoins();
+        _ui.RefreshData(CoinsRemainToCOllect(), _timeCounter.TimeToLoose);
         _ui.ResetGame();
         _isPlaying = true;
+    }
+
+    private int CoinsRemainToCOllect()
+    {
+        int coinsToCollect = _numberOfCoinsToCollect - _player.CoinsCollected;
+        return coinsToCollect;
     }
 }
